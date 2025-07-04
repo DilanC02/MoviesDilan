@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registrarse</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <h2>Crear Cuenta</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+      <!-- Nombre -->
+      <ion-item>
+        <ion-input
+          formControlName="name"
+          label="Nombre"
+          label-placement="floating"
+          type="text"
+          placeholder="Ingresa tu nombre">
+        </ion-input>
+      </ion-item>
+
+      <!-- Email -->
+      <ion-item>
+        <ion-input
+          formControlName="email"
+          label="Email"
+          label-placement="floating"
+          type="email"
+          placeholder="ejemplo@correo.com">
+        </ion-input>
+      </ion-item>
+
+      <!-- Password -->
+      <ion-item>
+        <ion-input
+          formControlName="password"
+          label="Contraseña"
+          label-placement="floating"
+          type="password"
+          placeholder="Mínimo 6 caracteres">
+        </ion-input>
+      </ion-item>
+
+      <!-- Botón Registrar -->
+      <ion-button
+        expand="block"
+        type="submit"
+        [disabled]="!registerForm.valid || isLoading">
+        <ion-spinner *ngIf="isLoading"></ion-spinner>
+        {{ isLoading ? 'Registrando...' : 'Registrarse' }}
+      </ion-button>
+
+    </form>
+  </div>
+</ion-content>

@@ -1,27 +1,76 @@
-#container {
+// home.page.scss
+
+.no-results {
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-top: 2rem;
+  padding: 1rem;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.loading-message {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+
+  ion-spinner {
+    margin-bottom: 1rem;
+  }
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+ion-segment {
+  margin-bottom: 1rem;
 }
 
-#container a {
-  text-decoration: none;
+ion-card {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    background-color: var(--ion-color-light);
+  }
+}
+
+.genre-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+ion-chip {
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+h3 {
+  color: var(--ion-color-primary);
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+}
+
+ion-searchbar {
+  --background: var(--ion-color-light);
+  --border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+// Responsive design
+@media (min-width: 768px) {
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
 }

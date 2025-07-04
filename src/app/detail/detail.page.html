@@ -1,0 +1,110 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Detalle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <!-- Imagen del póster -->
+  <ion-card class="poster-card">
+    <img
+      [src]="detailMovie.poster_path ? 'https://image.tmdb.org/t/p/w500' + detailMovie.poster_path : 'assets/img/default-default.png'"
+      alt="Póster de la película"
+      class="poster-img">
+  </ion-card>
+
+  <!-- Información principal -->
+  <ion-card class="movie-card">
+    <ion-card-content>
+      <ion-button expand="block" color="primary">
+        ▶ Play
+      </ion-button>
+      <ion-button expand="block" fill="outline" color="medium">
+        ⬇ Download
+      </ion-button>
+
+      <p class="overview">
+        {{ detailMovie.overview }}
+      </p>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <strong>Budget:</strong><br>{{ detailMovie.budget | currency }}
+          </ion-col>
+          <ion-col size="6">
+            <strong>Revenue:</strong><br>{{ detailMovie.revenue | currency }}
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6">
+            <strong>Release Date:</strong><br>{{ detailMovie.release_date }}
+          </ion-col>
+          <ion-col size="6">
+            <strong>Runtime:</strong><br>{{ detailMovie.runtime }} min
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <strong>Languages:</strong><br>
+            <span *ngFor="let lang of detailMovie?.spoken_languages; let i = index">
+              {{ lang.name }}<span *ngIf="i < detailMovie.spoken_languages.length - 1">, </span>
+            </span>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <strong>Rating:</strong><br>{{ detailMovie?.vote_average }} / 10
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="detailMovie?.genres?.length">
+          <ion-col size="12">
+            <strong>Genres:</strong><br>
+            <span *ngFor="let genre of detailMovie.genres; let i = index">
+              {{ genre.name }}<span *ngIf="i < detailMovie.genres.length - 1">, </span>
+            </span>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="detailMovie?.homepage">
+          <ion-col size="12">
+            <strong>Homepage:</strong><br>
+            <a [href]="detailMovie.homepage" target="_blank">{{ detailMovie.homepage }}</a>
+          </ion-col>
+        </ion-row>
+
+        <!-- Comentario -->
+         <ion-button expand="full" color="primary" fill="out" (click)="setStateComment()">
+          <ion-icon slot="start" name="add-outline"></ion-icon>
+          add Comentario
+         </ion-button>
+         <ion-item *ngIf="stateComment">
+  <ion-label>Comentario</ion-label>
+  <ion-input #comment type="text"></ion-input>
+  <ion-icon name="send-outline" (click)="saveComment(comment)"></ion-icon>
+</ion-item>
+         
+
+      <ion-list [inset]="true">
+  <ion-item *ngFor="let item of comments; let i = index" [button]="true" detail="false">
+    <div class="unread-indicator-wrapper" slot="start"></div>
+    <ion-label>
+      <strong>{{ item.user.name }}</strong>
+      <ion-text>{{ item.user.email }}</ion-text><br />
+      <ion-note color="medium" class="ion-text-wrap">{{ item.description }}</ion-note>
+    </ion-label>
+    <div class="metadata-end-wrapper" slot="end">
+      <ion-note color="medium">03:44</ion-note>
+      <ion-icon color="medium" name="chevron-forward"></ion-icon>
+    </div>
+  </ion-item>
+</ion-list>
+
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

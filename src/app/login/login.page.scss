@@ -1,0 +1,354 @@
+/* Login Page Styles for Ionic v8 - Angular */
+
+.login-content {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - var(--ion-safe-area-top) - 56px);
+  padding: 20px 0;
+}
+
+/* Header Section */
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.logo-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+
+  ion-icon {
+    color: white;
+    font-size: 48px;
+  }
+}
+
+.welcome-text {
+  h1 {
+    color: white;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 300;
+  }
+}
+
+/* Login Form */
+.login-form {
+  margin-bottom: 32px;
+}
+
+.login-card {
+  --background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 0;
+  animation: slideInUp 0.6s ease-out;
+
+  ion-card-content {
+    padding: 32px 24px;
+  }
+}
+
+/* Form Items */
+.login-item {
+  --border-radius: 12px;
+  --background: transparent;
+  --border-color: rgba(102, 126, 234, 0.3);
+  --color: #333;
+  margin-bottom: 8px;
+
+  ion-input {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    font-size: 1rem;
+  }
+
+  ion-icon {
+    color: #667eea;
+    margin-right: 8px;
+
+    &.password-toggle {
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #764ba2;
+      }
+    }
+  }
+
+  // Estados de validación
+  &.ng-invalid.ng-touched {
+    --border-color: var(--ion-color-danger);
+
+    ion-icon {
+      color: var(--ion-color-danger);
+    }
+  }
+
+  &.ng-valid.ng-touched {
+    --border-color: var(--ion-color-success);
+
+    ion-icon {
+      color: var(--ion-color-success);
+    }
+  }
+}
+
+// Mensajes de error
+.error-message {
+  margin: 4px 12px 16px;
+
+  ion-text small {
+    font-size: 0.8rem;
+    display: block;
+  }
+}
+
+/* Login Options */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.remember-checkbox {
+  --color: #667eea;
+  --checkmark-color: white;
+  font-size: 0.9rem;
+}
+
+.forgot-password {
+  --color: #667eea;
+  font-size: 0.9rem;
+  text-decoration: none;
+
+  &:hover {
+    --color: #764ba2;
+  }
+}
+
+/* Login Button */
+.login-button {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --color: white;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  margin: 24px 0;
+  height: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: none;
+  transition: all 0.3s ease;
+
+  &:not([disabled]):hover {
+    --box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    transform: translateY(-2px);
+  }
+
+  &[disabled] {
+    --background: rgba(102, 126, 234, 0.5);
+    --box-shadow: none;
+  }
+
+  ion-spinner {
+    --color: white;
+  }
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  margin: 32px 0 24px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(102, 126, 234, 0.3);
+  }
+
+  span {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0 16px;
+    color: #666;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Social Buttons */
+.social-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.social-button {
+  --border-radius: 12px;
+  --border-width: 2px;
+  flex: 1;
+  height: 48px;
+  font-weight: 500;
+  text-transform: none;
+  transition: all 0.3s ease;
+
+  &.google-button {
+    --border-color: #db4437;
+    --color: #db4437;
+
+    &:hover {
+      --background: #db4437;
+      --color: white;
+    }
+  }
+
+  &.facebook-button {
+    --border-color: #4267b2;
+    --color: #4267b2;
+
+    &:hover {
+      --background: #4267b2;
+      --color: white;
+    }
+  }
+}
+
+/* Register Section */
+.register-section {
+  text-align: center;
+  margin-top: auto;
+
+  ion-text p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 8px 0;
+    font-size: 1rem;
+  }
+}
+
+.register-button {
+  --color: white;
+  --background: rgba(255, 255, 255, 0.15);
+  --border-radius: 20px;
+  font-weight: 600;
+  text-transform: none;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    --background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .login-container {
+    padding: 16px 0;
+    min-height: calc(100vh - var(--ion-safe-area-top) - 56px);
+  }
+
+  .login-card ion-card-content {
+    padding: 24px 20px;
+  }
+
+  .welcome-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .social-buttons {
+    flex-direction: column;
+  }
+
+  .login-options {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .login-card {
+    --background: rgba(30, 30, 30, 0.95);
+  }
+
+  .login-item {
+    --color: #fff;
+    --border-color: rgba(102, 126, 234, 0.5);
+  }
+
+  .divider span {
+    background: rgba(30, 30, 30, 0.95);
+    color: #ccc;
+  }
+}
+
+/* Loading states */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Focus states */
+.login-item:focus-within {
+  --border-color: #667eea;
+  --box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}

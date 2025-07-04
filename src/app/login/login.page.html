@@ -1,0 +1,155 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="login-content">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Iniciar Sesión</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="login-container">
+    <!-- Header Section -->
+    <div class="login-header">
+      <ion-avatar class="logo-avatar">
+        <ion-icon name="person-circle-outline" size="large"></ion-icon>
+      </ion-avatar>
+      <ion-text class="welcome-text">
+        <h1>Bienvenido</h1>
+        <p>Inicia sesión para continuar</p>
+      </ion-text>
+    </div>
+
+    <!-- Login Form -->
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()" class="login-form">
+      <ion-card class="login-card">
+        <ion-card-content>
+          <!-- Email Input -->
+          <ion-item class="login-item">
+            <ion-input
+              type="email"
+              name="email"
+              [(ngModel)]="loginData.email"
+              #email="ngModel"
+              placeholder="Correo electrónico"
+              fill="outline"
+              label="Correo electrónico"
+              label-placement="floating"
+              required
+              email>
+              <ion-icon name="mail-outline" slot="start"></ion-icon>
+            </ion-input>
+          </ion-item>
+
+          <!-- Email validation errors -->
+          <div *ngIf="email.invalid && email.touched" class="error-message">
+            <ion-text color="danger">
+              <small *ngIf="email.errors?.['required']">El correo es requerido</small>
+              <small *ngIf="email.errors?.['email']">Ingresa un correo válido</small>
+            </ion-text>
+          </div>
+
+          <!-- Password Input -->
+          <ion-item class="login-item">
+            <ion-input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="loginData.password"
+              #password="ngModel"
+              placeholder="Contraseña"
+              fill="outline"
+              label="Contraseña"
+              label-placement="floating"
+              required
+              minlength="6">
+              <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-icon
+                [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+                slot="end"
+                class="password-toggle"
+                (click)="togglePasswordVisibility()">
+              </ion-icon>
+            </ion-input>
+          </ion-item>
+
+          <!-- Password validation errors -->
+          <div *ngIf="password.invalid && password.touched" class="error-message">
+            <ion-text color="danger">
+              <small *ngIf="password.errors?.['required']">La contraseña es requerida</small>
+              <small *ngIf="password.errors?.['minlength']">Mínimo 6 caracteres</small>
+            </ion-text>
+          </div>
+
+          <!-- Login Options -->
+          <div class="login-options">
+            <ion-checkbox
+              [(ngModel)]="rememberMe"
+              name="rememberMe"
+              class="remember-checkbox">
+              Recordarme
+            </ion-checkbox>
+            <ion-button
+              fill="clear"
+              size="small"
+              class="forgot-password"
+              (click)="onForgotPassword()">
+              ¿Olvidaste tu contraseña?
+            </ion-button>
+          </div>
+
+          <!-- Login Button -->
+          <ion-button
+            type="submit"
+            expand="block"
+            class="login-button"
+            (click)="login()"
+            [disabled]="loginForm.invalid || isLoading"
+            strong="true">
+            <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+            <ion-icon *ngIf="!isLoading" name="log-in-outline" slot="start"></ion-icon>
+            {{ isLoading ? 'Iniciando...' : 'Iniciar Sesión' }}
+          </ion-button>
+
+          <!-- Divider -->
+          <div class="divider">
+            <span>o continúa con</span>
+          </div>
+
+          <!-- Social Login Buttons -->
+          <div class="social-buttons">
+            <ion-button
+              fill="outline"
+              class="social-button google-button"
+              (click)="onGoogleLogin()">
+              <ion-icon name="logo-google" slot="start"></ion-icon>
+              Google
+            </ion-button>
+
+            <ion-button
+              fill="outline"
+              class="social-button facebook-button"
+              (click)="onFacebookLogin()">
+              <ion-icon name="logo-facebook" slot="start"></ion-icon>
+              Facebook
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </form>
+
+    <!-- Register Link -->
+    <div class="register-section">
+      <ion-text>
+        <p>¿No tienes una cuenta?</p>
+      </ion-text>
+      <ion-button
+        fill="clear"
+        class="register-button"
+        (click)="onRegister()">
+        Crear cuenta
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

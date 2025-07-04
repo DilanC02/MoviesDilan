@@ -1,20 +1,104 @@
+// home.page.html
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Dilan Movies</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Searchbar simplificada -->
+  <ion-searchbar
+    #searchbar
+    [value]="searchQuery"
+    (ionInput)="handleInput($event)"
+    (ionClear)="handleClear()"
+    placeholder="Buscar película, actor o género..."
+    debounce="300"
+    showClearButton="always">
+  </ion-searchbar>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- Filtros de búsqueda -->
+  <ion-segment [value]="searchType" (ionChange)="handleSegmentChange($event)">
+    <ion-segment-button value="movie">
+      <ion-label>Películas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="person">
+      <ion-label>Actores</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="genre">
+      <ion-label>Géneros</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Resultados de búsqueda de películas -->
+  <div *ngIf="searchType === 'movie' && movieResults.length > 0">
+    <h3>Películas</h3>
+    <ion-card *ngFor="let item of movieResults; trackBy: trackByFn" [routerLink]="['/tabs/home/detail', item.id]">
+      <img [src]="getImageUrl(item.poster_path)" [alt]="item.title">
+      <ion-card-header>
+        <ion-card-title>{{ item.title }}</ion-card-title>
+        <ion-card-subtitle>{{ item.release_date | date:'yyyy' }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ item.overview | slice:0:150 }}{{ item.overview?.length > 150 ? '...' : '' }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Resultados de búsqueda de actores -->
+  <div *ngIf="searchType === 'person' && actorResults.length > 0">
+    <h3>Actores</h3>
+    <ion-card *ngFor="let actor of actorResults; trackBy: trackByActorFn" (click)="selectActor(actor)">
+      <img [src]="getPersonImageUrl(actor.profile_path)" [alt]="actor.name">
+      <ion-card-header>
+        <ion-card-title>{{ actor.name }}</ion-card-title>
+        <ion-card-subtitle>{{ actor.known_for_department }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p *ngIf="actor.known_for && actor.known_for.length > 0">
+          Conocido por: {{ getKnownForText(actor.known_for) }}
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Resultados de búsqueda por género -->
+  <div *ngIf="searchType === 'genre' && genreMovies.length > 0">
+    <h3>Películas del género: {{ selectedGenreName }}</h3>
+    <ion-card *ngFor="let movie of genreMovies; trackBy: trackByFn" [routerLink]="['/tabs/home/detail', movie.id]">
+      <img [src]="getImageUrl(movie.poster_path)" [alt]="movie.title">
+      <ion-card-header>
+        <ion-card-title>{{ movie.title }}</ion-card-title>
+        <ion-card-subtitle>{{ movie.release_date | date:'yyyy' }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ movie.overview | slice:0:150 }}{{ movie.overview?.length > 150 ? '...' : '' }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Lista de géneros cuando no hay búsqueda -->
+  <div *ngIf="searchType === 'genre' && !searchQuery && genres.length > 0">
+    <h3>Selecciona un género</h3>
+    <div class="genre-chips">
+      <ion-chip *ngFor="let genre of genres" (click)="selectGenre(genre)" color="primary">
+        <ion-label>{{ genre.name }}</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+
+  <!-- Mensaje de carga -->
+  <div *ngIf="isLoading" class="loading-message">
+    <ion-spinner></ion-spinner>
+    <p>Buscando...</p>
+  </div>
+
+  <!-- Mensaje cuando no hay resultados -->
+  <div *ngIf="searchQuery && !hasResults() && !isLoading" class="no-results">
+    <ion-text color="medium">
+      <p>No se encontraron resultados para "{{ searchQuery }}"</p>
+    </ion-text>
   </div>
 </ion-content>
+
+<ion-router-outlet></ion-router-outlet>
